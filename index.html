@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syria Stays - Verified Travel Stays in Syria</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #0a1d37;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      height: 40px;
+    }
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-main {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .partner-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .partner-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      z-index: 1;
+      border-radius: 4px;
+      right: 0;
+    }
+    .dropdown-content a {
+      color: #333;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    .partner-dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .about-link {
+      color: white;
+      text-decoration: none;
+    }
+    .selectors {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .selector {
+      background-color: white;
+      color: black;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: none;
+    }
+    /* Hero Section */
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+      max-width: 800px;
+    }
+    /* Search Box */
+    .search-box {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem;
+      border-radius: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      width: 100%;
+      max-width: 800px;
+    }
+    .search-box input,
+    .search-box select,
+    .search-box button {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      min-width: 180px;
+    }
+    .search-box button {
+      background-color: #0a1d37;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s;
+    }
+    .search-box button:hover {
+      background-color: #1a3b5a;
+    }
+    /* Sections */
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section h2 {
+      margin-bottom: 2rem;
+      color: #0a1d37;
+      text-align: center;
+    }
+    /* Carousel */
+    .carousel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding: 1rem 0;
+      scrollbar-width: none;
+    }
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+    /* Cards */
+    .card {
+      min-width: 280px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1.25rem;
+      text-align: left;
+    }
+    .card-body h4 {
+      margin: 0 0 0.5rem 0;
+      color: #0a1d37;
+    }
+    .card-body p {
+      margin: 0 0 1rem 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .card-body button {
+      background-color: #0a1d37;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+    .card-body button:hover {
+      background-color: #1a3b5a;
+    }
+    /* Steps */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .step {
+      background-color: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+    .step h3 {
+      color: #0a1d37;
+      margin-top: 0;
+    }
+    .step button {
+      background-color: #0a1d37;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .step button:hover {
+      background-color: #1a3b5a;
+      transform: translateY(-2px);
+    }
+    /* Services */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .service {
+      background-color: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid #e9ecef;
+    }
+    .service:hover {
+      background-color: #0a1d37;
+      color: white;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-color: #0a1d37;
+    }
+    /* Footer */
+    footer {
+      background-color: #0a1d37;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+      }
+      .nav-container {
+        gap: 1rem;
+      }
+      .nav-main {
+        gap: 1rem;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .search-box {
+        padding: 1rem;
+      }
+      .search-box input,
+      .search-box select,
+      .search-box button {
+        min-width: 100%;
+      }
+      .section {
+        padding: 3rem 1rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      .nav-container {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: #0a1d37;
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .nav-container.active {
+        display: flex;
+      }
+      .partner-dropdown {
+        width: 100%;
+      }
+      .partner-btn {
+        justify-content: space-between;
+        width: 100%;
+      }
+      .dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+      }
+      .selectors {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <img src="https://placehold.co/200x60/0a1d37/FFFFFF?text=Syria+Stays&font=arial" alt="Syria Stays Logo" class="logo">
+    <button class="mobile-menu-btn">☰</button>
+    <div class="nav-container">
+      <div class="nav-main">
+        <div class="partner-dropdown">
+          <button class="partner-btn">
+            Become a Partner <span>▼</span>
+          </button>
+          <div class="dropdown-content">
+            <a href="https://wa.me/123456789?text=Hotel+Owner+Inquiry">🏨 Hotel Owner</a>
+            <a href="https://wa.me/123456789?text=Apartment+Host+Inquiry">🏠 Apartment Host</a>
+            <a href="https://wa.me/123456789?text=Airport+Pickup+Service">✈️ Airport Pickup</a>
+            <a href="https://wa.me/123456789?text=Tour+Guide+Inquiry">🗺️ Tourist Guide</a>
+            <a href="https://wa.me/123456789?text=Trip+Planner+Inquiry">📅 Trip Planner</a>
+          </div>
+        </div>
+        <a href="#" class="about-link">About Us</a>
+      </div>
+      <div class="selectors">
+        <select class="selector">
+          <option>🌐 EN</option>
+          <option>🌐 AR</option>
+        </select>
+        <select class="selector">
+          <option>💱 USD</option>
+          <option>💱 EUR</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>More Than a Stay — A Journey to Remember</h1>
+    <div class="search-box">
+      <input type="text" placeholder="Destination">
+      <input type="text" placeholder="Check-in" class="datepicker">
+      <input type="text" placeholder="Check-out" class="datepicker">
+      <select>
+        <option value="">Guests</option>
+        <option value="1">1 Guest</option>
+        <option value="2">2 Guests</option>
+        <option value="3">3 Guests</option>
+        <option value="4+">4+ Guests</option>
+      </select>
+      <button>Search</button>
+    </div>
+  </section>
+
+  <!-- Featured Destinations -->
+  <section class="section">
+    <h2>Top-Rated Experiences Waiting for You</h2>
+    <div class="carousel">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Damascus Hotel">
+        <div class="card-body">
+          <h4>Damascus Palace Hotel</h4>
+          <p>📍 Damascus - "Luxury in the Heart of History"</p>
+          <button>Book Now</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Aleppo Apartment">
+        <div class="card-body">
+          <h4>Aleppo Heritage Apartment</h4>
+          <p>📍 Aleppo - "Authentic Local Living"</p>
+          <button>Book Now</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1535478044878-3ed83d5456ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Latakia Resort">
+        <div class="card-body">
+          <h4>Latakia Beach Resort</h4>
+          <p>📍 Latakia - "Mediterranean Paradise"</p>
+          <button>Book Now</button>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Homs Guesthouse">
+        <div class="card-body">
+          <h4>Homs Traditional Guesthouse</h4>
+          <p>📍 Homs - "Cultural Immersion"</p>
+          <button>Book Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Step Journey -->
+  <section class="section">
+    <h2>Plan Your Journey in 3 Easy Steps</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>✅ Step 1: Discover</h3>
+        <p>Browse curated stays, experiences, and tours. Search by city, property type, or inspiration.</p>
+        <p>Let our travel experts organize a complete program tailored just for you!</p>
+        <button onclick="window.location.href='trip-planning.html'">Get Custom Trip Plan</button>
+      </div>
+      <div class="step">
+        <h3>✅ Step 2: Book with Ease</h3>
+        <p>Choose your perfect stay and confirm your details — all online. Secure, transparent booking with no hidden fees.</p>
+      </div>
+      <div class="step">
+        <h3>✅ Step 3: Enjoy the Experience</h3>
+        <p>Personalized support throughout your journey from our local team.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <h2>Explore Our Services</h2>
+    <div class="services">
+      <div class="service" onclick="window.location.href='#hotels'">
+        🏨 Hotels
+      </div>
+      <div class="service" onclick="window.location.href='#apartments'">
+        🏠 Apartments
+      </div>
+      <div class="service" onclick="window.location.href='#airport-pickup'">
+        ✈️ Airport Pickup
+      </div>
+      <div class="service" onclick="window.location.href='#tour-guides'">
+        🗺️ Tour Guides
+      </div>
+      <div class="service" onclick="window.location.href='trip-planning.html'">
+        📅 Trip Planning
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#">Home</a>
+      <a href="#">About Us</a>
+      <a href="#">Become a Partner</a>
+      <a href="#">Blog</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+    <p>&copy; 2023 Syria Stays. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    // Initialize date pickers
+    flatpickr(".datepicker", {
+      dateFormat: "Y-m-d",
+      minDate: "today"
+    });
+    
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('.nav-container').classList.toggle('active');
+    });
+    
+    // Card hover effects
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
+      });
+    });
+    
+    // Smooth scrolling for service buttons
+    document.querySelectorAll('.service').forEach(button => {
+      button.addEventListener('click', function(e) {
+        if(this.getAttribute('onclick').includes('#')) {
+          e.preventDefault();
+          const targetId = this.getAttribute('onclick').split("'")[1];
+          document.querySelector(targetId)?.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
